@@ -5,30 +5,58 @@ class Db_Operations():
 	def __init__(self,dbname):
 		self.dbname=dbname
 
-	def create_database(self):
+	def get_connection(self):
 		try:
-		  connection=sqlite3.connect(dbname)
+		  conn=sqlite3.connect(self.dbname)
+		  cur=conn.cursor()
+		  return conn,cur
 		except Exception as err:
 			print err
 
-	def create_table(sef,query):
+	def create_table(self,query):
 		try:
-			connection=sqlite3.connect(dbname)
-			cur=connection.execute(query)
-			connection.commit()
-			connection.close()
-		except Exeception as err:
+			conn,cur=self.get_connection()
+			cur.execute(query)
+			conn.commit()
+			conn.close()
+		except Exception as err:
 			print err
 
-	#def insert_values_table(self,query,list2):
-		#connection=sqlite3.connect(dbname)
-		#try:
-			#for a in list2:
-				#cur=connection.execute(query,a)
-			#connection.commit()
-			#connection.close()
-		#except Exception as err:
-			#print err
+	def insert_values_table(self,query,list2):
+		conn,cur=self.get_connection()
+		try:
+			for a in list2:
+				cur.execute(query,a)
+			conn.commit()
+			conn.close()
+		except Exception as err:
+			print err
+
+	def delete_values_table(self,query):
+		conn,cur=self.get_connection()
+		try:
+			cur.execute(query)
+			conn.commit()
+			conn.close()
+		except Exception as err:
+			print err    
+
+	def update_values_table(self,query):
+		conn,cur=self.get_connection()
+		try:
+		   cur.execute(query)
+		   conn.commit()
+		   conn.close()
+		except Exception as err:
+		   print err
+						
+
+
+
+
+			
+					
+ 
 
 
 			
